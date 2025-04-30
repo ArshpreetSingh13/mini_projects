@@ -46,25 +46,28 @@
 
     <nav id="navmenu" class="navmenu ">
       <ul>
-        <li><a href="index.php"><i class="bi bi-house navicon"></i><span>Home</span></a></li>
-        <li><a href="trip.php"><i class="bi bi-plus-square"></i><span>ADD Trip</span></a></li>
-        <li><a href="all.php"><i class="bi bi-check-square"></i><span> Trip Complete</span></a></li>
-        <li><a href="end_de.php">END<span>Of the Day</span></a></li>
 
         <?php
         if (isset($_SESSION['id'])) {
           ?>
+          <li><a href="trip.php" class="active"><i class="bi bi-plus-square"></i><span>ADD Trip</span></a></li>
+          <li><a href="all.php" class="active"><i class="bi bi-check-square"></i><span> Trip Complete</span></a></li>
+          <li><a href="end_de.php" class="active">END<span >Of the Day</span></a></li>
+          <li><a href="end.php" class="active"><i class="bi bi-box-arrow-right"></i><span>LogOut</span></a></li>
 
-          <li><a href="end.php"><i class="bi bi-box-arrow-right"></i><span>LogOut</span></a></li>
           <?php
-        }
-        else{
+        } else {
           ?>
 
-          <li><a href="login.php"><i class="bi bi-box-arrow-in-left"></i><span>Login</span></a></li>
+          <li class=""><a href="index.php" class="active"><i class="bi bi-house navicon " ></i><span>Home</span></a></li>
+          <li><a href="login.php" class="active"><i class="bi bi-box-arrow-in-left"></i><span>Login</span></a></li>
           <?php
         }
         ?>
+
+
+
+
 
 
 

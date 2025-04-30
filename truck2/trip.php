@@ -31,22 +31,7 @@ include("header.php")
                         <div class="row gy-4">
 
 
-                            <div class="col-md-12">
-                                <select class="form-select mb-3" aria-label="Default select example" name="dr_id">
-                                     <option selected disabled>Enter Your Name</option>
-                                    <?php
-                                    include("config.php");
-                                    $query = "SELECT * FROM `driver` ";
-                                    $res = mysqli_query($db, $query);
-                                    while ($data = mysqli_fetch_assoc($res)) {
-                                        ?>
-                                        <option value="<?php echo $data['id'] ?>"><?php echo $data['name'] ?></option>
-                                        <?php
-                                    }
-                                    ?>
-
-                                </select>
-                            </div>
+                           
 
 
                             <div class="col-md-12">
@@ -56,14 +41,14 @@ include("header.php")
                             <div class="col-md-12">
                                 <select class="form-select mb-3" aria-label="Default select example" name="task">
 
-                                    <option selected disabled>Open this select menu</option>
+                                    <option selected disabled>Select Your Task</option>
                                     <option value="1">Pick Up</option>
                                     <option value="2">Drop Off</option>
 
 
 
                                 </select>
-                                <a href="trip_com.php">completed</a>
+                               
                             </div>
 
 
@@ -94,7 +79,7 @@ include("footer.php")
 <?php
 if (isset($_REQUEST["submit_btn"])) {
 
-    $dr_id = $_REQUEST["dr_id"];
+    $dr_id = $_SESSION['id'];
     $trip_title = $_REQUEST["trip_title"];
     $task = $_REQUEST["task"];
 
@@ -111,10 +96,10 @@ if (isset($_REQUEST["submit_btn"])) {
     if ($res > 0) {
         
         $_SESSION['id']=$dr_id;
-        echo "<script>window.location.assign('trip.php?msg=Trip is added successful')</script>";
+        echo "<script>window.location.assign('all.php?msg=Trip is added successful')</script>";
 
     } else { {
-            echo "<script>window.location.assign('trip.php?msg=Trip is not added')</script>";
+            echo "<script>window.location.assign('all.php?msg=Trip is not added')</script>";
         }
 
     }

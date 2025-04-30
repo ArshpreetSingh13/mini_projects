@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("header.php")
     ?>
 
@@ -28,20 +29,21 @@ include("header.php")
 
                         <tr>
                             <th>S.No </th>
+                            <th>Title</th>
                             <th>starting time</th>
                             <th>ending time </th>
                             <th>Total time </th>
-                            <th>task bones </th>
-                            <th>travel charges </th>
+                            <th>Task bonus </th>
+                            <th>Travel charges </th>
                         </tr>
                         <?php
 
 
-                        if (isset($_GET['msg'])) {
+                        
                             $totaltime = 0;
                             $count = 0;
                             $one = 0;
-                            $drId = $_GET['msg'];
+                            $drId =  $_SESSION['id'];;
                             include("config.php");
                             $query = "SELECT * FROM `trip` WHERE dr_id='$drId'";
                             $res = mysqli_query($db, $query);
@@ -55,8 +57,10 @@ include("header.php")
 
                                     if ($data['task'] == 1) {
                                         $amt = 10;
+                                        $task="Pick UP";
                                     } else {
                                         $amt = 15;
+                                        $task = "Drop Off";
                                     }
 
                                     $pkms = $data['kms'] * 5;
@@ -74,11 +78,12 @@ include("header.php")
                                     ?>
                                     <tr>
                                         <td><?php echo $one ?></td>
-                                        <td><?php echo $data['created_at'] ?></td>
+                                        <td><?php echo $data['title'] ?></td>
+                                        <td><?php echo $data['created_at'] ?>...</td>
                                         <td><?php echo $data['com'] ?></td>
                                         <td><?php echo $Tdiss['TimeDifference'] ?></td>
-                                        <td><?php echo $amt ?></td>
-                                        <td><?php echo $data['kms'] ?>*5=<?php echo $pkms ?></td>
+                                        <td>Rs<?php echo $amt ?>  for <br><strong>  <?php echo $task; ?></strong> </td>
+                                        <td><?php echo $data['kms'] ?>*5=<?php echo $pkms ?>Rs</td>
 
 
                                     </tr>
@@ -89,7 +94,7 @@ include("header.php")
 
                             }
 
-                        }
+                       
                         ?>
                         <div class="d-flex">
 

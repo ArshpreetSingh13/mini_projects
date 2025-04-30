@@ -1,9 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["id"])) {
-    echo "<script>window.location.assign('login.php?msg=please Login ')</script>";
 
-}
 include("header.php")
 ?>
 

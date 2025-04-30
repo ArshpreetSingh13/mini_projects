@@ -72,12 +72,21 @@ if(isset($_REQUEST["submit_btn"])){
     $query="INSERT INTO `driver`( `name` ) VALUES ('$name')";
 
     $res=mysqli_query($db,$query);
-
+    
+    
+    
+    
     if($res>0){
-        echo "<script>window.location.assign('trip.php?msg=You can Add your Trip')</script>";
+      
+      $dr_query="SELECT * FROM `driver` ORDER BY `id` DESC";
+      $dr_res=mysqli_query($db,$dr_query);
+      $dr_data=mysqli_fetch_assoc($dr_res);
+    $_SESSION['id'] = $dr_data['id'];
+
+        echo "<script>window.location.assign('trip.php?msg=Please login')</script>";
     }
     else{ {
-            echo "<script>window.location.assign('trip.php?msg=driver added unsuccessfully')</script>";
+            echo "<script>window.location.assign('index.php?msg=Driver Adding failed')</script>";
         }
 
     }

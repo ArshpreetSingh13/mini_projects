@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("header.php")
     ?>
 
@@ -10,7 +11,7 @@ include("header.php")
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>your Reward</h2>
+            <h2>Total Trip Complete</h2>
             <p>Congrats you Complete the trip</p>
 
         </div><!-- End Section Title -->
@@ -28,11 +29,12 @@ include("header.php")
 
                         <tr>
                             <th>S.No</th>
+                            <th>Title</th>
                             <th>starting time</th>
                             <th>ending time </th>
                             <th>Total time </th>
-                            <th>task bones </th>
-                            <th>travel charges </th>
+                            <th>Task bonus </th>
+                            <th>Travel charges </th>
                         </tr>
                         <?php
 
@@ -52,8 +54,10 @@ include("header.php")
 
                                     if ($data['task'] == 1) {
                                         $amt = 10;
+                                        $task="Pick Up";
                                     } else {
                                         $amt = 15;
+                                        $task = "Drop Off";
                                     }
 
                                     $pkms = $data['kms'] * 5;
@@ -62,10 +66,11 @@ include("header.php")
                                     ?>
                                 <tr>
                                     <td><?php echo $one ?></td>
-                                    <td><?php echo $data['created_at'] ?></td>
+                                    <td><?php echo $data['title'] ?></td>
+                                    <td><?php echo $data['created_at'] ?>...</td>
                                     <td><?php echo $data['com'] ?></td>
                                     <td><?php echo $Tdiss['TimeDifference'] ?></td>
-                                    <td><?php echo $amt ?></td>
+                                    <td>Rs <?php echo $amt ?> for <br><strong><?php echo $task?></strong></td>
                                     <td><?php echo $data['kms'] ?>*5= <strong><?php echo $pkms ?></strong> </td>
 
                                 </tr>
@@ -83,6 +88,9 @@ include("header.php")
 
                     </table>
                 </div><!-- End Contact Form -->
+                <div class="d-flex justify-content-center" style="width:100%;">
+                    <a href="end_de.php" class="btn btn-primary">End Your Day</a>
+                </div>
 
             </div>
 

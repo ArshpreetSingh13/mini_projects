@@ -10,7 +10,7 @@ include("header.php")
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Add your trip</h2>
+            <h2>Please Login</h2>
             <p>Spread Your Wings</p>
             <?php
             if (isset($_GET['msg'])) {

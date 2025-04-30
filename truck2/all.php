@@ -1,10 +1,7 @@
 
 <?php
 session_start();
-if (!isset($_SESSION["id"])) {
-    echo "<script>window.location.assign('login.php?msg=please Login ')</script>";
 
-}
 include("header.php")
 
     ?>
@@ -48,6 +45,9 @@ include("header.php")
                                     $query = "SELECT * FROM `trip` WHERE dr_id='$dr_id' ";
                                     $res = mysqli_query($db, $query);
                                     while ($data = mysqli_fetch_assoc($res)) {
+                                        if($data['status'] == "pending"){
+
+                                        
                                         ?>
                                        <div class="card d-flex">
                                             <div class="card-body">
@@ -57,6 +57,8 @@ include("header.php")
                                         </div>
                                        
                                         <?php
+                                   }
+
                                     }
                                     ?>
                             </div>
