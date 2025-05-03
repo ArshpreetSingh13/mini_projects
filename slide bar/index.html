@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sidebar Toggle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <header class="topC text-white " >
+        <div class=" p-2 ps-5 d-flex gap-3 align-items-center justify-content-around" style="height: 70px;">
+            <div class="d-flex align-items-center ps-lg-4 gap-3">
+                <span><img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuUxhU9HMlwvUrCqb3xawwzSACUX97npM23w&s"
+                        alt="" style="height: 50px; border-radius: 100px;"></span>
+                <h2>logo</h2>
+                <i class="bi bi-search"> Search</i>
+            </div>
+            <div class="pe-5">
+                <i class="bi bi-bell-fill"></i>
+            </div>
+
+
+        </div>
+    </header>
+
+    <div class="container ">
+        <div class="sidebar-toggle text-white " id="toggleIcon">
+            <i class="bi bi-list" id="openSidebar"></i>
+        </div>
+
+
+        <div id="sidebar" class="open pt-3 overflow-auto">
+
+            <div class="dropdown ">
+                <h2 class="mb-2 ps-4">welcome</h2>
+
+                <div class="d-flex hover justify-content-between text-decoration-none  mb-2 profileBackground "
+                    style="border-radius: 0px ; padding: 20px;" id="Profile" type="button">
+
+                    <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+                        alt="" style="height: 40px; border-radius: 100px; position: relative;">
+
+                    Profile
+
+                    <svg class="tra " xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.5 5.5l6 6 6-6H1.5z" />
+                    </svg>
+
+
+
+                </div>
+                <ul class=" visually-hidden tra ps-5 list-unstyled ">
+                    <li class="p-2"><a class="dropdown-item" href="#"><i class="bi bi-person-circle"></i> View
+                            Profile</a></li>
+                    <li class="p-2"><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Setting</a></li>
+                    <li class="p-2"><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+
+
+
+
+            <ul class="nav flex-column px-3">
+
+
+
+
+                <li class="nav-item">
+                    <div class="dropdown ">
+                        <a class="d-flex hover justify-content-between text-decoration-none mix mb-2" type="button">
+                            Home
+                            <svg class="tra" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.5 5.5l6 6 6-6H1.5z" />
+                            </svg>
+
+                        </a>
+                        <ul class=" visually-hidden tra">
+                            <li><a class="dropdown-item" href="#">First</a></li>
+                            <li><a class="dropdown-item" href="#">Second</a></li>
+                            <li><a class="dropdown-item" href="#">third</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown drop">
+                        <a class=" d-flex justify-content-between text-decoration-none mix hover mb-2" type="button">
+                            Done
+                            <svg class="tra" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.5 5.5l6 6 6-6H1.5z" />
+                            </svg>
+                        </a>
+                        <ul class=" visually-hidden tra">
+                            <li><a class="dropdown-item" href="#">First</a></li>
+                            <li><a class="dropdown-item" href="#">Second</a></li>
+                            <li><a class="dropdown-item" href="#">third</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown drop">
+                        <a class=" d-flex justify-content-between text-decoration-none hover mix mb-2" type="button">
+                            Done
+                            <svg class="tra" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.5 5.5l6 6 6-6H1.5z" />
+                            </svg>
+                        </a>
+                        <ul class=" visually-hidden tra">
+                            <li><a class="dropdown-item" href="#">First</a></li>
+                            <li><a class="dropdown-item" href="#">Second</a></li>
+                            <li><a class="dropdown-item" href="#">third</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+
+
+                <li class=" "><a class="nav-link text-white" href="#">Settings</a></li>
+            </ul>
+        </div>
+
+
+        <div id="overlay" class=" "></div>
+
+        <div class="container mt-5 pt-3">
+            <div class="row pt-5 d-flex justify-content-center">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHfaKwTLBweZYHGcXLKiK1WMd_bhs-SD_jg&s"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the
+                                card's
+                                content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHfaKwTLBweZYHGcXLKiK1WMd_bhs-SD_jg&s"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the
+                                card's
+                                content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHfaKwTLBweZYHGcXLKiK1WMd_bhs-SD_jg&s"
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the
+                                card's
+                                content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

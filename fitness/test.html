@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Goal Tracker & Habit Tracker</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: green;
+        }
+
+        .habit {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .habit button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>🎯 Daily Goal Tracker</h2>
+    <input type="text" id="goalInput" placeholder="Enter your daily fitness goal" />
+    <input type="time" id="goalTime" />
+    <button id="addGoalBtn">Add Goal</button>
+    <button id="clearGoalBtn">Clear Goal</button>
+
+    <div id="goalDisplay"></div>
+    <div id="countdown"></div>
+    <div id="quote" style="margin-top:10px; font-style:italic;"></div>
+
+    <h3>📜 Goal History</h3>
+    <ul id="goalHistory"></ul>
+
+    <hr>
+
+    <h2>✅ Habit Tracker</h2>
+    <input type="text" id="habitInput" placeholder="Add new habit" />
+    <button id="addHabitBtn">Add Habit</button>
+    <button id="resetHabitsBtn">Reset</button>
+
+    <div>
+        <label>Filter:
+            <select id="filterStatus">
+                <option value="all">All</option>
+                <option value="done">Done</option>
+                <option value="pending">Pending</option>
+            </select>
+        </label>
+        <label>Sort:
+            <select id="sortHabits">
+                <option value="default">Default</option>
+                <option value="alpha">Alphabetical</option>
+                <option value="completed">Completion Status</option>
+            </select>
+        </label>
+        <button id="generatePdfBtn">Export Daily Report (PDF)</button>
+    </div>
+
+    <ul id="habitList"></ul>
+    <p>Total: <span id="totalCount">0</span> | Completed: <span id="doneCount">0</span></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // DAILY GOAL TRACKER
+        const goalInput = document.getElementById("goalInput");
+        const goalTime = document.getElementById("goalTime");
+        const goalDisplay = document.getElementById("goalDisplay");
+        const countdown = document.getElementById("countdown");
+        const quote = document.getElementById("quote");
+        const goalHistory = document.getElementById("goalHistory");
+
+        const addGoalBtn = document.getElementById("addGoalBtn");
+        const clearGoalBtn = document.getElementById("clearGoalBtn");
+
+        const quotes = ["You got this!", "Keep going!", "One step at a time!", "Stay strong!", "Finish strong!"];
+
+        function saveGoal(goal, time, completed) {
+            localStorage.setItem("dailyGoal", goal);
+            localStorage.setItem("goalCompleted", completed);
+            localStorage.setItem("goalTime", time);
+        }
+
+        function loadGoal() {
+            const goal = localStorage.getItem("dailyGoal");
+            const completed = localStorage.getItem("goalCompleted") === "true";
+            const time = localStorage.getItem("goalTime");
+            if (goal) {
+                goalDisplay.textContent = goal + (time ? ` (Due: ${time})` : "");
+                if (completed) {
+                    goalDisplay.classList.add("completed");
+                    quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+                }
+            }
+        }
+
+        function updateCountdown() {
+            const time = localStorage.getItem("goalTime");
+            if (time) {
+                const now = new Date();
+                const due = new Date();
+                const [h, m] = time.split(":");
+                due.setHours(+h, +m, 0);
+                const diff = due - now;
+                if (diff > 0) {
+                    const mins = Math.floor(diff / 60000);
+                    countdown.textContent = `⏳ ${mins} minutes remaining`;
+                } else {
+                    countdown.textContent = "⏰ Time's up!";
+                }
+            }
+        }
+
+        addGoalBtn.onclick = () => {
+            const goal = goalInput.value.trim();
+            const time = goalTime.value;
+            if (!goal) return alert("Enter a goal");
+            goalDisplay.textContent = goal + (time ? ` (Due: ${time})` : "");
+            goalDisplay.classList.remove("completed");
+            quote.textContent = "";
+            saveGoal(goal, time, false);
+
+            // Add to history
+            const li = document.createElement("li");
+            li.textContent = goal;
+            goalHistory.appendChild(li);
+
+            goalInput.value = "";
+            goalTime.value = "";
+        };
+
+        clearGoalBtn.onclick = () => {
+            goalDisplay.textContent = "";
+            quote.textContent = "";
+            countdown.textContent = "";
+            localStorage.removeItem("dailyGoal");
+            localStorage.removeItem("goalCompleted");
+            localStorage.removeItem("goalTime");
+        };
+
+        goalDisplay.onclick = () => {
+            if (!goalDisplay.textContent) return;
+            goalDisplay.classList.toggle("completed");
+            const completed = goalDisplay.classList.contains("completed");
+            localStorage.setItem("goalCompleted", completed);
+            if (completed) quote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+            else quote.textContent = "";
+        };
+
+        loadGoal();
+        setInterval(updateCountdown, 60000);
+        updateCountdown();
+
+        // HABIT TRACKER
+        const habitInput = document.getElementById("habitInput");
+        const addHabitBtn = document.getElementById("addHabitBtn");
+        const habitList = document.getElementById("habitList");
+        const resetHabitsBtn = document.getElementById("resetHabitsBtn");
+        const filterStatus = document.getElementById("filterStatus");
+        const sortHabits = document.getElementById("sortHabits");
+        const totalCount = document.getElementById("totalCount");
+        const doneCount = document.getElementById("doneCount");
+
+        let habits = JSON.parse(localStorage.getItem("habits")) || [];
+
+        function renderHabits() {
+            habitList.innerHTML = "";
+            const filter = filterStatus.value;
+            let sorted = [...habits];
+
+            if (sortHabits.value === "alpha") {
+                sorted.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (sortHabits.value === "completed") {
+                sorted.sort((a, b) => b.done - a.done);
+            }
+
+            sorted.forEach((habit, i) => {
+                if (filter === "done" && !habit.done) return;
+                if (filter === "pending" && habit.done) return;
+
+                const li = document.createElement("li");
+                li.className = "habit";
+
+                const span = document.createElement("span");
+                span.textContent = habit.name;
+                if (habit.done) span.classList.add("completed");
+
+                span.onclick = () => {
+                    habit.done = !habit.done;
+                    saveHabits();
+                    renderHabits();
+                };
+
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "❌";
+                delBtn.onclick = () => {
+                    habits.splice(i, 1);
+                    saveHabits();
+                    renderHabits();
+                };
+
+                const upBtn = document.createElement("button");
+                upBtn.textContent = "⬆️";
+                upBtn.onclick = () => {
+                    if (i > 0) [habits[i], habits[i - 1]] = [habits[i - 1], habits[i]];
+                    saveHabits();
+                    renderHabits();
+                };
+
+                const downBtn = document.createElement("button");
+                downBtn.textContent = "⬇️";
+                downBtn.onclick = () => {
+                    if (i < habits.length - 1) [habits[i], habits[i + 1]] = [habits[i + 1], habits[i]];
+                    saveHabits();
+                    renderHabits();
+                };
+
+                li.append(span, upBtn, downBtn, delBtn);
+                habitList.appendChild(li);
+            });
+
+            totalCount.textContent = habits.length;
+            doneCount.textContent = habits.filter(h => h.done).length;
+        }
+
+        function saveHabits() {
+            localStorage.setItem("habits", JSON.stringify(habits));
+        }
+
+        addHabitBtn.onclick = () => {
+            const name = habitInput.value.trim();
+            if (!name) return alert("Enter a habit");
+            habits.push({ name, done: false });
+            saveHabits();
+            habitInput.value = "";
+            renderHabits();
+        };
+
+        resetHabitsBtn.onclick = () => {
+            if (confirm("Reset all habits?")) {
+                habits = [];
+                saveHabits();
+                renderHabits();
+            }
+        };
+
+        filterStatus.onchange = renderHabits;
+        sortHabits.onchange = renderHabits;
+
+        renderHabits();
+
+        // PDF EXPORT
+        document.getElementById("generatePdfBtn").onclick = () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("📅 Daily Fitness & Habit Report", 10, 10);
+            doc.text(`Goal: ${goalDisplay.textContent || "None"}`, 10, 20);
+            doc.text("Habits:", 10, 30);
+            habits.forEach((h, i) => {
+                doc.text(`${i + 1}. ${h.name} - ${h.done ? "✔️" : "❌"}`, 10, 40 + i * 10);
+            });
+            doc.save("daily_report.pdf");
+        };
+    </script>
+</body>
+
+</html>
