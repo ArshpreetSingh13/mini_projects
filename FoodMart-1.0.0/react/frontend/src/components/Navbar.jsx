@@ -5,6 +5,7 @@ import { FiHeart } from "react-icons/fi";
 import { NavLink } from 'react-router-dom';
 
 
+
 function Navbar() {
     return (
         <>
@@ -51,9 +52,12 @@ function Navbar() {
 
                             <ul className="d-flex justify-content-end list-unstyled m-0">
                                 <li>
-                                    <a href="#" className="rounded-circle bg-light text-dark fs-4 p-2 mx-1">
+
+
+                                    <NavLink to="/login" className="rounded-circle bg-light text-dark fs-4 p-2 mx-1">
                                         <IoPersonOutline />
-                                    </a>
+                                    </NavLink>
+
                                 </li>
                                 <li>
                                     <a href="#" className="rounded-circle bg-light p-2 text-dark fs-4 mx-1">
@@ -124,13 +128,15 @@ function Navbar() {
                                                 <NavLink to="/addproduct" className="nav-link">Add Product</NavLink>
                                             </li>
                                             <li className="nav-item">
-                                                <NavLink to="/cateproduct" className="nav-link">catePRo</NavLink>
+                                                <NavLink to="/cateproduct/:id" className="nav-link">catePRo</NavLink>
                                             </li>
                                             <li className="nav-item dropdown">
                                                 <a className="nav-link dropdown-toggle" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
                                                 <ul className="dropdown-menu" aria-labelledby="pages">
-                                                    <li><a href="index.html" className="dropdown-item">About Us </a></li>
-                                                    <li><a href="index.html" className="dropdown-item">Shop </a></li>
+                                                    <li><NavLink to="/managecategory" className="nav-link">Manage Category</NavLink></li>
+
+                                                    <li><NavLink to="/manageproduct" className="nav-link">Manage Product</NavLink></li>
+
                                                     <li><a href="index.html" className="dropdown-item">Single Product </a></li>
                                                     <li><a href="index.html" className="dropdown-item">Cart </a></li>
                                                     <li><a href="index.html" className="dropdown-item">Checkout </a></li>
@@ -149,7 +155,7 @@ function Navbar() {
                                             <li className="nav-item">
                                                 <a href="#sale" className="nav-link">Contact</a>
                                             </li>
-                                            
+
                                         </ul>
 
                                     </div>

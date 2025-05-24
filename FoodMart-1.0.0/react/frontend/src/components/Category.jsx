@@ -14,9 +14,9 @@ function Category() {
     useEffect( () => {
 
         const fetchData = async ()=>{
-            await axios.get("http://localhost:5000/api/category/getAll").then((USER) => {
-                setusers(USER.data.message)
-                console.log(users);
+            await axios.get("http://localhost:5000/api/category/getAll").then((res) => {
+                setusers(res.data.message)
+                console.log(res.data.message);
 
             }).catch((err) => {
                 console.log(err);
@@ -35,41 +35,43 @@ function Category() {
     <>
           <Navbar />
           
-          <section class="py-5 ">
-              <div class="container-fluid">
-                  <div class="row">
-                      <div class="col-md-12">
+          <section className="py-5 ">
+              <div className="container-fluid">
+                  <div className="row">
+                      <div className="col-md-12">
 
-                          <div class="section-header d-flex flex-wrap justify-content-between mb-5">
-                              <h2 class="section-title">Category</h2>
+                          <div className="section-header d-flex flex-wrap justify-content-between mb-5">
+                              <h2 className="section-title">Category</h2>
 
-                              <div class="d-flex align-items-center">
-                                  <a href="#" class="btn-link text-decoration-none">View All Categories →</a>
-                                  <div class="swiper-buttons">
-                                      <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                                      <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
+                              <div className="d-flex align-items-center">
+                                  <a href="#" className="btn-link text-decoration-none">View All Categories →</a>
+                                  <div className="swiper-buttons">
+                                      <button className="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
+                                      <button className="swiper-next category-carousel-next btn btn-yellow">❯</button>
                                   </div>
                               </div>
                           </div>
 
                       </div>
                   </div>
-                  <div class="row">
-                      <div class="col-md-12">
+                  <div className="row">
+                      <div className="col-md-12">
 
-                          <div class="category-carousel swiper">
+                          <div className="category-carousel swiper">
 
                           
 
                             <div className="row">
                             {
                                       users.map((e) => {
-                                          return <div className="col-md-3 ">
-                                              <span  class="nav-link category-item swiper-slide hoverb">
+                                          return <div key={e._id} className="col-md-3 ">
+                                              <span  className="nav-link category-item swiper-slide hoverb">
                                                 
                                                 <NavLink to={"/cateproduct/"+e._id}>
-                                                      <img src="cate1.png" alt="Category Thumbnail" />
-                                                      <h3 class="category-title">{e.category}</h3>
+                                                      
+                                                      <img src={`http://localhost:5000/public/${e.image}`} alt={e.image} />
+                                                      
+                                                      <h3 className="category-title">{e.category}</h3>
                                                 </NavLink>
                                               </span>
                                           </div>
@@ -77,94 +79,94 @@ function Category() {
                                   }
                               
                                 {/* <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div>
                                 <div className="col-md-3">
-                                      <a href="index.html" class="nav-link category-item swiper-slide">
+                                      <a href="index.html" className="nav-link category-item swiper-slide">
                                           <img src="cate1.png" alt="Category Thumbnail" />
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                       </a>
                                 </div> */}
                             </div>
 
-                              {/* <div class="d-flex">
+                              {/* <div className="d-flex">
                                  
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-bread-baguette.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Breads & Sweets</h3>
+                                          <h3 className="category-title">Breads & Sweets</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-soft-drinks-bottle.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-wine-glass-bottle.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-animal-products-drumsticks.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-bread-herb-flour.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
-                                  <a href="index.html" class="nav-link category-item swiper-slide">
+                                  <a href="index.html" className="nav-link category-item swiper-slide">
                                       <img src="images/icon-vegetables-broccoli.png" alt="Category Thumbnail"/>
-                                          <h3 class="category-title">Fruits & Veges</h3>
+                                          <h3 className="category-title">Fruits & Veges</h3>
                                   </a>
 
                               </div> */}

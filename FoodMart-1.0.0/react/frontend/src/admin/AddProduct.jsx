@@ -10,7 +10,8 @@ import axios from 'axios'
 function AddProduct() {
     const { register,
         handleSubmit,
-        watch, formState: { errors }
+        watch, 
+        reset,formState: { errors }
     } = useForm();
 
     const [Status, setStatus] = useState("")
@@ -30,6 +31,9 @@ function AddProduct() {
     useEffect(() => {
 
         const fetchData = async () => {
+
+           
+
             await axios.get("http://localhost:5000/api/category/getAll").then((USER) => {
                 setCategory(USER.data.message)
                 console.log(Category);
@@ -47,11 +51,21 @@ function AddProduct() {
     async function onSubmit(data) {
         try {
             console.log(data);
-            const respons = await axios.post("http://127.0.0.1:5000/api/product/addProduct", data)
 
-            if (respons.data.success) {
+            const newform = new FormData();
+            newform.append("product",data.product)
+            newform.append("price",data.price)
+            newform.append("image",data.image[0])
+            newform.append("category",data.category)
+            newform.append("description",data.description)
+           
+
+            const response = await axios.post("http://127.0.0.1:5000/api/product/addProduct", newform)
+
+            if (response.data.success) {
                 console.log("ADDED");
                 setStatus("Item Added")
+                reset()
 
             }
             else {
@@ -61,12 +75,14 @@ function AddProduct() {
             }
 
         } catch (error) {
-            if (error.respons) {
+            if (error.response) {
                 console.log(error);
 
             }
 
         }
+
+       
 
     }
   return (
@@ -112,11 +128,11 @@ function AddProduct() {
                                               <label className="form-label">Product Category</label>
 
                                               <select {...register("category", { required: { value: true, message: "category is required" } })} className="form-control form-control-lg" placeholder="Enter Your product category" >
-                                                  <option selected disabled value="">Select your category</option>
+                                                  <option selected disabled >Select your category</option>
 
                                                     {
                                                         Category.map((e)=>{
-                                                            return <option value={e.id}>{e.category}</option>
+                                                            return <option value={e._id}>{e.category}</option>
                                                         })
                                                     }
                                                 
@@ -128,8 +144,9 @@ function AddProduct() {
 
                                           <div className="mb-3">
                                               <label className="form-label">Product image</label>
-                                              <input type="file" className="form-control form-control-lg" placeholder="Enter Your product Name" />
-                                            
+                                              <input type="file" {...register("image", {required: {value: true, message: "image is required" } })} className="form-control form-control-lg" placeholder="Enter Your product Name" />
+
+                                              {errors.image && <div className='text-red'>{errors.image.message}</div>}
                                           </div>
 
                                           <div className="mb-3">

@@ -14,7 +14,11 @@ const db= require("./server/config/db")
 const apis=require("./server/router/route")
 const CategoryModel = require("./server/apis/category/CategoryModel")
 
+
 app.use("/api",apis)
+app.use('/public', express.static(__dirname + '/server/public'));
+
+
 
 
 

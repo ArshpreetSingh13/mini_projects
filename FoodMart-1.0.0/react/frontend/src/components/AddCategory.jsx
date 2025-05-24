@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import '../../public/shopping-cart.png'
@@ -9,10 +9,13 @@ import axios from 'axios'
 function AddCategory() {
     const { register,
         handleSubmit,
-        watch, formState: { errors }
+        watch,
+        reset, formState: { errors }
     } = useForm();
 
     const [Status, setStatus] = useState("")
+
+    
 
     useEffect(() => {
         setInterval(() => {
@@ -24,11 +27,22 @@ function AddCategory() {
 
    async function onSubmit(data){
         try {
-            console.log(data);
-            const respons=await axios.post("http://127.0.0.1:5000/api/category/addCategory",data)
+       
 
-            if (respons.data.success){
+            const newform=new FormData();
+
+            newform.append("category",data.category)
+            newform.append("image",data.image[0])
+
+            const response=await axios.post("http://127.0.0.1:5000/api/category/addCategory",newform,{
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+
+            if (response.data.success){
                 console.log("ADDED");
+                reset(); 
                 setStatus("Item Added")
                 
             }
@@ -37,9 +51,10 @@ function AddCategory() {
                 setStatus("Item alreay exist")
 
             }
+                     
            
         } catch (error) {
-            if(error.respons){
+            if(error.response){
                 console.log(error);
 
             }
@@ -76,10 +91,15 @@ function AddCategory() {
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="mb-3">
                                             <label className="form-label">Name</label>
-                                            <input type="text" {...register("category", { required: {value:true ,message:"Category is required"} })} className="form-control form-control-lg"  placeholder="Enter Your Category" />
+                                            <input type="text"  {...register("category", { required: {value:true ,message:"Category is required"} })} className="form-control form-control-lg"  placeholder="Enter Your Category" />
                                             {errors.category && <div className='text-red'>{errors.category.message}</div>}
                                         </div>
                                         
+                                        <div className="mb-3">
+                                            <label className="form-label">Name</label>
+                                            <input type="file"  {...register("image", { required: {value:true ,message:"image is required"} })} className="form-control form-control-lg"   />
+                                            {errors.image && <div className='text-red'>{errors.image.message}</div>}
+                                        </div>
                                        
                                        
                                         <div className="d-grid gap-2">

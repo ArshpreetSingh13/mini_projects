@@ -67,10 +67,12 @@ function Product() {
                                     {
                                         product.map((e) => {
                                             return <div className="col-md-3 ">
-                                                <a href="index.html" class="nav-link category-item swiper-slide hoverb">
-                                                    <img src="cate1.png" alt="Category Thumbnail" />
+                                                <span 
+                                                 class="nav-link category-item swiper-slide hoverb">
+                                                    <img src={`http://localhost:5000/public/product/${e.image}`} alt={e.image} />
                                                     <h3 class="category-title">{e.product}</h3>
-                                                </a>
+                                                    <p>{e.category}</p>
+                                                </span>
                                             </div>
                                         })
                                     }

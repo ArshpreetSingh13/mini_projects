@@ -2,30 +2,35 @@ import React, { useEffect, useState } from 'react'
 import { GiFruitBowl } from "react-icons/gi";
 import '../../public/cate1.png'
 import '../css/category.css'
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import axios from 'axios';
+import { NavLink, useParams } from 'react-router-dom';
 
 function CateProduct() {
 
-
+    const id = useParams()
+    console.log(id)
 
     const [product, setProduct] = useState([])
     useEffect(() => {
 
         const fetchData = async () => {
-            await axios.get("http://localhost:5000/api/product/getCatPro").then((PRODUCT) => {
+           
+            await axios.get(`http://localhost:5000/api/product/getCatPro/${id.id}`).then((PRODUCT) => {
                 setProduct(PRODUCT.data.message)
-                console.log(product);
-
+                
             }).catch((err) => {
                 console.log(err);
-
+                
             })
+            
         }
         fetchData()
 
     }, [])
+
+ 
 
 
 
@@ -65,10 +70,12 @@ function CateProduct() {
                                     {
                                         product.map((e) => {
                                             return <div className="col-md-3 ">
-                                                <a href="index.html" class="nav-link category-item swiper-slide hoverb">
-                                                    <img src="cate1.png" alt="Category Thumbnail" />
-                                                    <h3 class="category-title">{e.product}</h3>
-                                                </a>
+                                                <spam href="index.html" class="nav-link category-item swiper-slide hoverb">
+                                                    <NavLink to={"/"}>
+                                                        <img src={`http://localhost:5000/public/product/${e.image}`} alt={e.image} />
+                                                        <h3 class="category-title">{e.product}</h3>
+                                                    </NavLink>
+                                                </spam>
                                             </div>
                                         })
                                     }
